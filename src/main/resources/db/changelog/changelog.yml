@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: initial
+      author: Helgus T'ayrin
+      changes:
+        - createTable:
+            tableName: usr
+            remarks: Пользователи
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_pk
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: age
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: house
+            remarks: Дома
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: house_pk
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: owner
+                  type: bigint
+                  constraints:
+                    foreignKeyName: owner_fk
+                    references: usr(id)
+                    nullable: true
+        - createTable:
+            tableName: lodger
+            remarks: Жильцы
+            columns:
+              - column:
+                  name: lodger_id
+                  type: bigint
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: userId_pk
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: userId_fk
+                    references: usr(id)
+              - column:
+                  name: house_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: houseId_fk
+                    references: house(id)
